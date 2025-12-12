@@ -1,34 +1,30 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import appLogo from "/favicon.svg";
-import PWABadge from "./PWABadge.jsx";
-import "./App.css";
+import Sidebar from "@/components/sidebar";
+import Navbar from "@/components/navbar";
+import { Outlet } from "react-router-dom";
+import ForgotPassword from "./pages/ForgotPassword";
+import Tasks from "./pages/Tasks";
 
-function App() {
-  const [count, setCount] = useState(0);
-
+export default function DashboardLayout({ children }) {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={appLogo} className="logo" alt="frontend logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="flex min-h-screen bg-background">
+      <Sidebar />
+
+      <div className="flex-1 flex flex-col">
+        <Navbar />
+        <main className="flex-1 px-4 py-4 sm:px-6 lg:px-10 mx-auto w-full max-w-6xl">
+          {children ?? <Outlet />}
+        </main>
       </div>
-      <h1>frontend</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <h1 class="text-3xl font-bold underline">Hello world!</h1> <PWABadge />
-    </>
+    </div>
   );
 }
 
-export default App;
+function App() {
+  return (
+    <>
+      {/* ...existing routes... */}
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/tasks" element={<Tasks />} />
+    </>
+  );
+}
